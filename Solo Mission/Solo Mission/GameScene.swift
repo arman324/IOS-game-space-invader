@@ -14,6 +14,14 @@ class GameScene: SKScene {
    
     let player = SKSpriteNode(imageNamed: "playerShip")
     
+    func random() -> CGFloat {
+        return CGFloat(Float(arc4random()) / 0xFFFFFFFF)
+    }
+    func random(min min: CGFloat, max: CGFloat) -> CGFloat {
+        return random() * (max - min) + min
+    }
+    
+    
     //    define gameArea a variable of type CGRect
     var gameArea: CGRect
     
@@ -43,8 +51,21 @@ class GameScene: SKScene {
         player.position = CGPoint(x: self.size.width/2 , y: self.size.height * 0.2)
         player.zPosition = 2
         self.addChild(player)
+        
+        startNewLevel()
     }
 
+    func startNewLevel(){
+        
+        let spawn = SKAction.run(spawnEnemy)
+        let waitToSpawn = SKAction.wait(forDuration: 1)
+        let spawnSequence = SKAction.sequence([spawn, waitToSpawn])
+        let spawnForever = SKAction.repeatForever(spawnSequence)
+        self.run(spawnForever)
+        
+    }
+    
+    
     func fireBullet(){
         let bullet = SKSpriteNode(imageNamed: "bullet")
         bullet.setScale(1)
@@ -57,6 +78,31 @@ class GameScene: SKScene {
         let deleteBullet = SKAction.removeFromParent()
         let bulletSequence = SKAction.sequence([moveBullet,deleteBullet])
         bullet.run(bulletSequence)
+    }
+    
+    func spawnEnemy(){
+        let randomXStart = random(min: gameArea.minX , max: gameArea.maxX)
+        let randomXEnd = random(min: gameArea.minX, max: gameArea.maxX)
+        
+        let startPoint = CGPoint(x: randomXStart, y: self.size.height * 1.2)
+        let endPoint = CGPoint(x: randomXEnd, y: -self.size.height * 0.2)
+        
+        let enemy = SKSpriteNode(imageNamed: "enemyShip")
+        enemy.setScale(1)
+        enemy.position = startPoint
+        enemy.zPosition = 2
+        self.addChild(enemy)
+        
+        let moveEnemy = SKAction.move(to: endPoint, duration: 1.5)
+        let deleteEnemy = SKAction.removeFromParent()
+        let enemySequence = SKAction.sequence([moveEnemy,deleteEnemy])
+        enemy.run(enemySequence)
+        
+        let dx = endPoint.x - startPoint.x
+        let dy = endPoint.y - startPoint.y
+        let amountToRotate = atan2(dy, dx)
+        enemy.zRotation = amountToRotate
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
