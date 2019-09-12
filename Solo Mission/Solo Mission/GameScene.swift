@@ -45,5 +45,12 @@ class GameScene: SKScene {
         fireBullet()
     }
     
-    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch : AnyObject in touches{
+            let pointOfTouch = touch.location(in: self)
+            let previousPointOfTouch = touch.previousLocation(in: self)
+            let amountDragged = pointOfTouch.x - previousPointOfTouch.x
+            player.position.x += amountDragged
+        }
+    }
 }
