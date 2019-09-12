@@ -86,22 +86,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if body1.categoryBitMask == PhysicsCategories.Player && body2.categoryBitMask == PhysicsCategories.Enemy{
 //            if the player has hit the enemy
+            if body1.node != nil {
+            var spawnposition1 : CGPoint = body1.node!.position
+            spawnExplosion(spawnPosition: spawnposition1)
+            }
+            if body2.node != nil {
+            var spawnposition2 : CGPoint = body2.node!.position
+            spawnExplosion(spawnPosition: spawnposition2)
+            }
             
             body1.node?.removeFromParent()
             body2.node?.removeFromParent()
             
         }
-        if body1.categoryBitMask == PhysicsCategories.Bullet && body2.categoryBitMask == PhysicsCategories.Enemy{
+        if body1.categoryBitMask == PhysicsCategories.Bullet && body2.categoryBitMask == PhysicsCategories.Enemy && (body2.node?.position.y)! < self.size.height{
 //            if the bullet has hit the enemy
-            
+            if body2.node != nil{
+            var spawnposition2 : CGPoint = body2.node!.position
+            spawnExplosion(spawnPosition: spawnposition2)
+            }
             body1.node?.removeFromParent()
             body2.node?.removeFromParent()
             
         }
-        
-        
     }
     
+    func spawnExplosion(spawnPosition: CGPoint){
+        let explosion = SKSpriteNode(imageNamed: "explosion")
+        explosion.position = spawnPosition
+        explosion.zPosition = 3
+        explosion.setScale(0)
+        self.addChild(explosion)
+        
+        
+        let scaleIn = SKAction.scale(to: 1, duration: 0.1)
+        let fadeOut = SKAction.fadeOut(withDuration: 0.1)
+        let delete = SKAction.removeFromParent()
+        let explosionSequence = SKAction.sequence([scaleIn, fadeOut, delete])
+        
+        explosion.run(explosionSequence)
+    }
     
     
     func startNewLevel(){
