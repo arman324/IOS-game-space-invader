@@ -9,7 +9,7 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
    
     let player = SKSpriteNode(imageNamed: "playerShip")
@@ -41,6 +41,9 @@ class GameScene: SKScene {
     
     
     override func didMove(to view: SKView) {
+        
+        self.physicsWorld.contactDelegate = self
+        
         let background = SKSpriteNode(imageNamed: "background")
         background.size = self.size
         background.position = CGPoint(x: self.size.width/2 , y: self.size.height/2)
@@ -50,8 +53,9 @@ class GameScene: SKScene {
         player.setScale(1)
         player.position = CGPoint(x: self.size.width/2 , y: self.size.height * 0.2)
         player.zPosition = 2
+        player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
+        player.physicsBody!.affectedByGravity = false
         self.addChild(player)
-        
         startNewLevel()
     }
 
@@ -71,6 +75,8 @@ class GameScene: SKScene {
         bullet.setScale(1)
         bullet.position = player.position
         bullet.zPosition = 1
+        bullet.physicsBody = SKPhysicsBody(rectangleOf: bullet.size)
+        bullet.physicsBody!.affectedByGravity = false
         self.addChild(bullet)
         
         
@@ -91,6 +97,8 @@ class GameScene: SKScene {
         enemy.setScale(1)
         enemy.position = startPoint
         enemy.zPosition = 2
+        enemy.physicsBody = SKPhysicsBody(rectangleOf: enemy.size)
+        enemy.physicsBody!.affectedByGravity = false
         self.addChild(enemy)
         
         let moveEnemy = SKAction.move(to: endPoint, duration: 1.5)
