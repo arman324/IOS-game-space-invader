@@ -27,4 +27,23 @@ class GameScene: SKScene {
         self.addChild(player)
     }
 
+    func fireBullet(){
+        let bullet = SKSpriteNode(imageNamed: "bullet")
+        bullet.setScale(1)
+        bullet.position = player.position
+        bullet.zPosition = 1
+        self.addChild(bullet)
+        
+        
+        let moveBullet = SKAction.moveTo(y: self.size.height + bullet.size.height , duration: 1)
+        let deleteBullet = SKAction.removeFromParent()
+        let bulletSequence = SKAction.sequence([moveBullet,deleteBullet])
+        bullet.run(bulletSequence)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        fireBullet()
+    }
+    
+    
 }
