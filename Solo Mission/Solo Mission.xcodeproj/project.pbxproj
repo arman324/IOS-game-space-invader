@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C2122893232B8C8D0013CF7B /* theBoldFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2122892232B8C8D0013CF7B /* theBoldFont.ttf */; };
 		C2E01439232A928D00FF9F0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E01438232A928D00FF9F0C /* AppDelegate.swift */; };
 		C2E0143B232A928D00FF9F0C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C2E0143A232A928D00FF9F0C /* GameScene.sks */; };
 		C2E0143D232A928D00FF9F0C /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = C2E0143C232A928D00FF9F0C /* Actions.sks */; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C2122892232B8C8D0013CF7B /* theBoldFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = theBoldFont.ttf; sourceTree = "<group>"; };
 		C2E01435232A928D00FF9F0C /* Solo Mission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Solo Mission.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2E01438232A928D00FF9F0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2E0143A232A928D00FF9F0C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				C2E0143E232A928D00FF9F0C /* GameScene.swift */,
 				C2E01440232A928D00FF9F0C /* GameViewController.swift */,
 				C2E01442232A928D00FF9F0C /* Main.storyboard */,
+				C2122892232B8C8D0013CF7B /* theBoldFont.ttf */,
 				C2E01445232A928E00FF9F0C /* Assets.xcassets */,
 				C2E01447232A928E00FF9F0C /* LaunchScreen.storyboard */,
 				C2E0144A232A928E00FF9F0C /* Info.plist */,
@@ -240,6 +243,7 @@
 			files = (
 				C2E01444232A928D00FF9F0C /* Main.storyboard in Resources */,
 				C2E0143B232A928D00FF9F0C /* GameScene.sks in Resources */,
+				C2122893232B8C8D0013CF7B /* theBoldFont.ttf in Resources */,
 				C2E01446232A928E00FF9F0C /* Assets.xcassets in Resources */,
 				C2E01449232A928E00FF9F0C /* LaunchScreen.storyboard in Resources */,
 				C2E0143D232A928D00FF9F0C /* Actions.sks in Resources */,

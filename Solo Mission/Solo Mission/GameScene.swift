@@ -11,6 +11,8 @@ import GameplayKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    var gameScore = 0
+    let scoreLable = SKLabelNode(fontNamed: "the Bold Font")
    
     let player = SKSpriteNode(imageNamed: "playerShip")
     
@@ -68,9 +70,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody!.collisionBitMask = PhysicsCategories.None
         player.physicsBody!.contactTestBitMask = PhysicsCategories.Enemy
         self.addChild(player)
+        
+        scoreLable.text = "score: 0"
+        scoreLable.fontSize = 70
+        scoreLable.fontColor = SKColor.white
+        scoreLable.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
+        scoreLable.position = CGPoint(x: self.size.width * 0.20, y: self.size.height * 0.9)
+        scoreLable.zPosition = 100
+        self.addChild(scoreLable)
+        
         startNewLevel()
+        
     }
 
+    func addScore(){
+        gameScore += 1
+        scoreLable.text = "score: \(gameScore)"
+        
+    }
+    
+    
     func didBegin(_ contact: SKPhysicsContact) {
         var body1 = SKPhysicsBody()
         var body2 = SKPhysicsBody()
@@ -87,11 +106,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if body1.categoryBitMask == PhysicsCategories.Player && body2.categoryBitMask == PhysicsCategories.Enemy{
 //            if the player has hit the enemy
             if body1.node != nil {
-            var spawnposition1 : CGPoint = body1.node!.position
+            let spawnposition1 : CGPoint = body1.node!.position
             spawnExplosion(spawnPosition: spawnposition1)
             }
             if body2.node != nil {
-            var spawnposition2 : CGPoint = body2.node!.position
+            let spawnposition2 : CGPoint = body2.node!.position
             spawnExplosion(spawnPosition: spawnposition2)
             }
             
@@ -101,8 +120,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         if body1.categoryBitMask == PhysicsCategories.Bullet && body2.categoryBitMask == PhysicsCategories.Enemy && (body2.node?.position.y)! < self.size.height{
 //            if the bullet has hit the enemy
+            
+            addScore()
+            
             if body2.node != nil{
-            var spawnposition2 : CGPoint = body2.node!.position
+            let spawnposition2 : CGPoint = body2.node!.position
             spawnExplosion(spawnPosition: spawnposition2)
             }
             body1.node?.removeFromParent()
