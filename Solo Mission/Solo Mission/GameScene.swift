@@ -8,6 +8,28 @@
 
 import SpriteKit
 import GameplayKit
+import Foundation
+import AVFoundation
+
+class MusicPlayer {
+    static let shared = MusicPlayer()
+    var audioPlayer: AVAudioPlayer?
+    
+    func startBackgroundMusic() {
+        if let bundle = Bundle.main.path(forResource: "soloMissionMusic", ofType: "wav") {
+            let backgroundMusic = NSURL(fileURLWithPath: bundle)
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf:backgroundMusic as URL)
+                guard let audioPlayer = audioPlayer else { return }
+                audioPlayer.numberOfLoops = -1
+                audioPlayer.prepareToPlay()
+                audioPlayer.play()
+            } catch {
+                print(error)
+            }
+        }
+    }
+}
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -21,7 +43,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(imageNamed: "playerShip")
     
-    
+   
     struct PhysicsCategories{
         static let None : UInt32 = 0
         static let Player : UInt32 = 0b1
@@ -58,6 +80,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
         
+        MusicPlayer.shared.startBackgroundMusic()
+        
         self.physicsWorld.contactDelegate = self
         
         let background = SKSpriteNode(imageNamed: "background")
@@ -92,10 +116,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         livesLabel.zPosition = 100
         self.addChild(livesLabel)
         
+        
         startNewLevel()
         
     }
 
+    
     func loseALife(){
         liveNumber -= 1
         livesLabel.text = "Lives: \(liveNumber)"
