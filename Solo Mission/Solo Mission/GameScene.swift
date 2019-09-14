@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import Foundation
 import AVFoundation
+var gameScore = 0
 
 class MusicPlayer {
     static let shared = MusicPlayer()
@@ -89,6 +90,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     override func didMove(to view: SKView) {
+        gameScore = 0
         
         MusicPlayer.shared.startBackgroundMusic()
         
@@ -174,6 +176,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy.removeAllActions()
         }
         
+        let changeSceneAction = SKAction.run(changeScene)
+        let waitToChangeSequence = SKAction.wait(forDuration: 1)
+        let changeSceneSequence = SKAction.sequence([waitToChangeSequence,changeSceneAction])
+        self.run(changeSceneAction)
+        
+        
+    }
+    
+    
+    func changeScene(){
+    
+        let sceneToMoveTo = GameOverSceme(size: self.size)
+        sceneToMoveTo.scaleMode = self.scaleMode
+        let myTransition = SKTransition.fade(withDuration: 0.5)
+        self.view!.presentScene(sceneToMoveTo, transition: myTransition)
         
     }
     

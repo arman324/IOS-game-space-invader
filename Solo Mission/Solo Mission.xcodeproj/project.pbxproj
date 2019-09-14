@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C2122893232B8C8D0013CF7B /* theBoldFont.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C2122892232B8C8D0013CF7B /* theBoldFont.ttf */; };
 		C2172973232D146F006517F9 /* soloMission.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = C2172972232D146F006517F9 /* soloMission.mp3 */; };
+		C2172975232D1F42006517F9 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2172974232D1F42006517F9 /* GameOverScene.swift */; };
 		C2E01439232A928D00FF9F0C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E01438232A928D00FF9F0C /* AppDelegate.swift */; };
 		C2E0143B232A928D00FF9F0C /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = C2E0143A232A928D00FF9F0C /* GameScene.sks */; };
 		C2E0143D232A928D00FF9F0C /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = C2E0143C232A928D00FF9F0C /* Actions.sks */; };
@@ -41,6 +42,7 @@
 /* Begin PBXFileReference section */
 		C2122892232B8C8D0013CF7B /* theBoldFont.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = theBoldFont.ttf; sourceTree = "<group>"; };
 		C2172972232D146F006517F9 /* soloMission.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = soloMission.mp3; sourceTree = "<group>"; };
+		C2172974232D1F42006517F9 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 		C2E01435232A928D00FF9F0C /* Solo Mission.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Solo Mission.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2E01438232A928D00FF9F0C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C2E0143A232A928D00FF9F0C /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 				C2E0143A232A928D00FF9F0C /* GameScene.sks */,
 				C2E0143C232A928D00FF9F0C /* Actions.sks */,
 				C2E0143E232A928D00FF9F0C /* GameScene.swift */,
+				C2172974232D1F42006517F9 /* GameOverScene.swift */,
 				C2E01440232A928D00FF9F0C /* GameViewController.swift */,
 				C2E01442232A928D00FF9F0C /* Main.storyboard */,
 				C2172972232D146F006517F9 /* soloMission.mp3 */,
@@ -277,6 +280,7 @@
 			files = (
 				C2E0143F232A928D00FF9F0C /* GameScene.swift in Sources */,
 				C2E01441232A928D00FF9F0C /* GameViewController.swift in Sources */,
+				C2172975232D1F42006517F9 /* GameOverScene.swift in Sources */,
 				C2E01439232A928D00FF9F0C /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
