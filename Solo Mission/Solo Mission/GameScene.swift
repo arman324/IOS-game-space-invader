@@ -16,7 +16,7 @@ class MusicPlayer {
     var audioPlayer: AVAudioPlayer?
     
     func startBackgroundMusic() {
-        if let bundle = Bundle.main.path(forResource: "soloMissionMusic", ofType: "wav") {
+        if let bundle = Bundle.main.path(forResource: "soloMission", ofType: "mp3") {
             let backgroundMusic = NSURL(fileURLWithPath: bundle)
             do {
                 audioPlayer = try AVAudioPlayer(contentsOf:backgroundMusic as URL)
@@ -43,7 +43,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(imageNamed: "playerShip")
     
+    
+    //save our current game state, using enum
+    enum gameState {
+        case preGame // when the game state is before the start of the game
+        case inGame // when the game state is during the game
+        case afterGame // when the game state is after the game
+    }
    
+    var currentGameState = gameState.inGame
+    
+    
     struct PhysicsCategories{
         static let None : UInt32 = 0
         static let Player : UInt32 = 0b1
@@ -131,6 +141,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let scaleSequence = SKAction.sequence([scaleUp, scaleDown])
         livesLabel.run(scaleSequence)
         
+        if liveNumber == 0 {
+            runGameOver()
+        }
+        
     }
     
     
@@ -141,6 +155,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if gameScore == 10 || gameScore == 25 || gameScore == 50 {
             startNewLevel()
         }
+        
+    }
+    
+    
+    func runGameOver(){
+        
+        currentGameState = gameState.afterGame
+        
+        self.removeAllActions()
+        self.enumerateChildNodes(withName: "Bullet"){
+            bullet, stop in
+            bullet.removeAllActions()
+        }
+        
+        self.enumerateChildNodes(withName: "Enemy"){
+            enemy, stop in
+            enemy.removeAllActions()
+        }
+        
         
     }
     
@@ -172,6 +205,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             body1.node?.removeFromParent()
             body2.node?.removeFromParent()
             
+            runGameOver()
         }
         if body1.categoryBitMask == PhysicsCategories.Bullet && body2.categoryBitMask == PhysicsCategories.Enemy && (body2.node?.position.y)! < self.size.height{
 //            if the bullet has hit the enemy
@@ -236,6 +270,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func fireBullet(){
         let bullet = SKSpriteNode(imageNamed: "bullet")
+        bullet.name = "Bullet" //bullet has a refrence name
         bullet.setScale(1)
         bullet.position = player.position
         bullet.zPosition = 1
@@ -261,6 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let endPoint = CGPoint(x: randomXEnd, y: -self.size.height * 0.2)
         
         let enemy = SKSpriteNode(imageNamed: "enemyShip")
+        enemy.name = "Enemy"
         enemy.setScale(1)
         enemy.position = startPoint
         enemy.zPosition = 2
@@ -275,7 +311,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let deleteEnemy = SKAction.removeFromParent()
         let loseALifeAction = SKAction.run(loseALife)
         let enemySequence = SKAction.sequence([moveEnemy, deleteEnemy, loseALifeAction])
+        
+        
+        if currentGameState == gameState.inGame{
         enemy.run(enemySequence)
+        }
         
         let dx = endPoint.x - startPoint.x
         let dy = endPoint.y - startPoint.y
@@ -285,7 +325,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        fireBullet()
+        if currentGameState == gameState.inGame{ //only fire a bullet if the game is active
+            fireBullet()
+            
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -293,7 +336,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let pointOfTouch = touch.location(in: self)
             let previousPointOfTouch = touch.previousLocation(in: self)
             let amountDragged = pointOfTouch.x - previousPointOfTouch.x
+            
+            
+            if currentGameState == gameState.inGame{ // only move the player if the game is currently active
             player.position.x += amountDragged
+            }
+            
             
             if player.position.x > gameArea.maxX - player.size.width / 2 {
                 player.position.x = gameArea.maxX - player.size.width / 2
