@@ -10,6 +10,7 @@ import SpriteKit
 import GameplayKit
 import Foundation
 import AVFoundation
+
 var gameScore = 0
 
 class MusicPlayer {
@@ -33,8 +34,8 @@ class MusicPlayer {
 }
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-    
-    var gameScore = 0
+   
+
     let scoreLabel = SKLabelNode(fontNamed: "the Bold Font")
    
     var liveNumber = 3
@@ -187,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func changeScene(){
     
-        let sceneToMoveTo = GameOverSceme(size: self.size)
+        let sceneToMoveTo = GameOverScene(size: self.size)
         sceneToMoveTo.scaleMode = self.scaleMode
         let myTransition = SKTransition.fade(withDuration: 0.5)
         self.view!.presentScene(sceneToMoveTo, transition: myTransition)
