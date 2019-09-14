@@ -45,6 +45,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let player = SKSpriteNode(imageNamed: "playerShip")
     
+    let tapToStartLabel = SKLabelNode(fontNamed: "The Bold Font")
+    
     
     //save our current game state, using enum
     enum gameState {
@@ -53,7 +55,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case afterGame // when the game state is after the game
     }
    
-    var currentGameState = gameState.inGame
+    var currentGameState = gameState.preGame
     
     
     struct PhysicsCategories{
@@ -104,7 +106,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(background)
         
         player.setScale(1)
-        player.position = CGPoint(x: self.size.width/2 , y: self.size.height * 0.2)
+        player.position = CGPoint(x: self.size.width/2 , y: 0 - player.size.height)
         player.zPosition = 2
         player.physicsBody = SKPhysicsBody(rectangleOf: player.size)
         player.physicsBody!.affectedByGravity = false
@@ -117,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         scoreLabel.fontSize = 70
         scoreLabel.fontColor = SKColor.white
         scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.left
-        scoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height * 0.9)
+        scoreLabel.position = CGPoint(x: self.size.width * 0.20, y: self.size.height + scoreLabel.frame.size.height)
         scoreLabel.zPosition = 100
         self.addChild(scoreLabel)
         
@@ -125,15 +127,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         livesLabel.fontSize = 70
         livesLabel.fontColor = SKColor.white
         livesLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentMode.right
-        livesLabel.position = CGPoint(x: self.size.width * 0.78, y: self.size.height * 0.9)
+        livesLabel.position = CGPoint(x: self.size.width * 0.78, y: self.size.height + livesLabel.frame.size.height )
         livesLabel.zPosition = 100
         self.addChild(livesLabel)
         
+        let moveOnToScreenAction = SKAction.moveTo(y: self.size.height*0.9, duration: 0.3)
+        scoreLabel.run(moveOnToScreenAction)
+        livesLabel.run(moveOnToScreenAction)
         
-        startNewLevel()
+        tapToStartLabel.text = "Tap to Begin"
+        tapToStartLabel.fontSize = 100
+        tapToStartLabel.fontColor = SKColor.white
+        tapToStartLabel.zPosition = 1
+        tapToStartLabel.position = CGPoint(x: self.size.width/2 , y: self.size.height/2)
+        tapToStartLabel.alpha = 0
+        self.addChild(tapToStartLabel)
+        
+     
+        
+        let fadeInAction = SKAction.fadeIn(withDuration: 0.3)
+        tapToStartLabel.run(fadeInAction)
         
     }
 
+    
+    func startGame(){
+        
+        currentGameState = gameState.inGame
+        
+        let fadeOutAction = SKAction.fadeIn(withDuration: 0.5)
+        let deleteAction = SKAction.removeFromParent()
+        let deleteSequence = SKAction.sequence([fadeOutAction,deleteAction])
+        tapToStartLabel.run(deleteSequence)
+        
+        let moveShipOntoScreenAction = SKAction.moveTo(y: self.size.height * 0.2 , duration: 0.5)
+        let startLevelAction = SKAction.run(startNewLevel)
+        let startGameSequence = SKAction.sequence([moveShipOntoScreenAction,startLevelAction])
+        player.run(startGameSequence)
+        
+        
+    }
+    
+    
     
     func loseALife(){
         liveNumber -= 1
@@ -343,10 +378,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if currentGameState == gameState.inGame{ //only fire a bullet if the game is active
-            fireBullet()
-            
+       
+        if currentGameState == gameState.preGame{
+            startGame()
         }
+        
+        else if currentGameState == gameState.inGame{ //only fire a bullet if the game is active
+            fireBullet()
+        }
+        
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
