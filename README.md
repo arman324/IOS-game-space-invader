@@ -5,7 +5,8 @@
 ![ezgif com-video-to-gif](https://user-images.githubusercontent.com/35253872/78884229-d57e3c80-7a6f-11ea-80db-ee34cdcf5ee7.gif)
 
 ## Overview
-AN ARCADE SHOOTING GAME
+### AN ARCADE SHOOTING GAME
+
 Earth's last hope is in your hands, take control of the lone spaceship and protect Earth from alien swarms.
 Your goal will be quite challenging as you will have to save the Universe from its evil enemies.
 In this space shooting game, you will be facing an increasingly large number of enemies and hazardous environments.
