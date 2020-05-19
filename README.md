@@ -15,10 +15,10 @@ In this space shooting game, you will be facing an increasingly large number of 
 Touch the screen to move and kill all enemies.
 
 ## Features
-If one of the enemies hits your spaceship, you will lose the game.
-If you do not kill 3 enemies, you will lose the game.
-When your score reaches 10, the speed of the game will increase.
-Similarly, when your score reaches 25 and 50, the speed of the game will increase more and more, as a result, the game gets harder.
+* If one of the enemies hits your spaceship, you will lose the game.
+* If you do not kill 3 enemies, you will lose the game.
+* When your score reaches 10, the speed of the game will increase.
+* Similarly, when your score reaches 25 and 50, the speed of the game will increase more and more, as a result, the game gets harder.
 
 ## Requirements
 Requires ios 9.0 or later. 
