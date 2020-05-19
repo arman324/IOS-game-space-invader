@@ -21,8 +21,8 @@ Touch the screen to move and kill all enemies.
 * Similarly, when your score reaches 25 and 50, the speed of the game will increase more and more, as a result, the game gets harder.
 
 ## Requirements
-Requires ios 9.0 or later. 
-Compatible with iPhone, iPad, and iPod touch
+* Requires ios 9.0 or later. 
+* Compatible with iPhone, iPad, and iPod touch
 
 ## Support
 Reach out to me at riasiarman@yahoo.com
